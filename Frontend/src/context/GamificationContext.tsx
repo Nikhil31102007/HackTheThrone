@@ -8,10 +8,8 @@ type GamificationContextType = {
   level: number;
   loading: boolean;
   error: boolean;
-  addXp: (amount: number) => void;
   setXp: (value: number) => void;
-  loseLife: () => void;
-  addLife: () => void;
+  
   syncWithBackend: () => Promise<void>;
 };
 
@@ -124,37 +122,8 @@ export const GamificationProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [xp, loading]);
 
-  // Add XP (local only, never from backend)
-  const addXp = (amount: number) => {
-    console.log('Adding XP:', amount)
-    setXp(prev => {
-      const newXp = Math.max(0, prev + amount);
-      console.log('XP updated:', prev, '->', newXp)
-      return newXp;
-    });
-  };
 
-  // Lose life (local, then sync from backend)
-  const loseLife = () => {
-    console.log('Losing a life (local)')
-    setLives(prev => {
-      const newLives = Math.max(0, prev - 1);
-      console.log('Lives updated locally:', prev, '->', newLives)
-      localStorage.setItem('lives', String(newLives));
-      return newLives;
-    });
-  };
 
-  // Add life (local)
-  const addLife = () => {
-    console.log('Adding a life')
-    setLives(prev => {
-      const newLives = prev + 1;
-      console.log('Lives updated:', prev, '->', newLives)
-      localStorage.setItem('lives', String(newLives));
-      return newLives;
-    });
-  };
 
   // Loading screen while fetching initial data
   if (loading) {
@@ -184,10 +153,9 @@ export const GamificationProvider = ({ children }: { children: ReactNode }) => {
         level,
         loading,
         error,
-        addXp,
+
         setXp,
-        loseLife,
-        addLife,
+        
         syncWithBackend,
       }}
     >

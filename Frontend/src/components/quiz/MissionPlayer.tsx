@@ -22,7 +22,7 @@ interface MissionPlayerProps {
 const MissionPlayer = ({ chapterID, startQuestionNo, onComplete, onExit, onProgressUpdate }: MissionPlayerProps) => {
     console.log('MissionPlayer mounted - Chapter:', chapterID, 'Start:', startQuestionNo)
 
-    const { addXp, lives, syncWithBackend } = useGamification() as any;
+    const {  lives, syncWithBackend } = useGamification() as any;
 
     const [currentQuestionNo, setCurrentQuestionNo] = useState(startQuestionNo);
     const [questionData, setQuestionData] = useState<QuestionData | null>(null);
@@ -118,7 +118,7 @@ const MissionPlayer = ({ chapterID, startQuestionNo, onComplete, onExit, onProgr
                 questionData.xp_reward
             
             console.log('Awarding XP for theory:', xpAwarded)
-            addXp(xpAwarded)
+            
             
             if (onProgressUpdate) {
                 console.log('Calling progress update callback')
@@ -196,7 +196,7 @@ const MissionPlayer = ({ chapterID, startQuestionNo, onComplete, onExit, onProgr
                     questionData.xp_reward
 
                 console.log('XP to award:', xpAwarded)
-                addXp(xpAwarded)
+                
                 console.log('XP awarded')
 
                 console.log('Fetching progress...')
@@ -229,7 +229,7 @@ const MissionPlayer = ({ chapterID, startQuestionNo, onComplete, onExit, onProgr
                     validationResult.xp_awarded || validationResult.lives_remaining || validationResult.new_xp ||questionData.xp_reward
                 
                 console.log('Adding XP:', xpAwarded)
-                addXp(xpAwarded)
+                
                 
                 // Sync with backend to ensure lives are current
                 console.log('Syncing with backend after correct answer...')
@@ -279,7 +279,7 @@ const MissionPlayer = ({ chapterID, startQuestionNo, onComplete, onExit, onProgr
 
     const handleFinish = () => {
         console.log('Chapter completed - awarding bonus XP')
-        addXp(100);
+        
         onComplete();
     };
 
