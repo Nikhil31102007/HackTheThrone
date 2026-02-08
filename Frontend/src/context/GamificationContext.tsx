@@ -53,6 +53,7 @@ export const GamificationProvider = ({ children }: { children: ReactNode }) => {
         const backendLives = Math.max(0, response.lives);
         console.log('Updating lives from', lives, 'to', backendLives)
         setLives(backendLives);
+        setXp(response.xp);
         localStorage.setItem('lives', String(backendLives));
       } else {
         console.warn('Backend did not return lives')

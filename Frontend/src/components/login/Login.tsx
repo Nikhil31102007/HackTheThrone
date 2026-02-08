@@ -155,9 +155,9 @@ const Login = () => {
         console.log('Token saved:', localStorage.getItem('access_token'))
         console.log('Signed up and logged in successfully')
 
-        setTimeout(() => {
+
           window.location.href = '/'
-        }, 10000);
+
       } catch (err) {
         console.error('Signup error', err)
         setLoginError('An error occurred during signup. Please try again.')

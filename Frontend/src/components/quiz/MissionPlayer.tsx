@@ -9,7 +9,7 @@ import { Chapters } from '../../data/chapters';
 import { apiFetch, UserProgress } from '../../utils/Utils';
 import { QuestionData, ValidationResult } from '../../types/QuizTypes';
 import MissionSkeleton from './MissionSkeleton';
-
+import { GamificationProvider } from '../../context/GamificationContext';
 
 interface MissionPlayerProps {
     chapterID: number
@@ -118,8 +118,8 @@ const MissionPlayer = ({ chapterID, startQuestionNo, onComplete, onExit, onProgr
                 questionData.xp_reward
             
             console.log('Awarding XP for theory:', xpAwarded)
-            
-            
+            await syncWithBackend()
+
             if (onProgressUpdate) {
                 console.log('Calling progress update callback')
                 onProgressUpdate()
@@ -313,7 +313,6 @@ const MissionPlayer = ({ chapterID, startQuestionNo, onComplete, onExit, onProgr
                 >
                     <h1>MISSION ACCOMPLISHED</h1>
                     <p>CHAPTER COMPLETE</p>
-                    <p>BONUS XP: +100</p>
                     <button className={styles.checkBtn} onClick={handleFinish}>
                         Continue
                     </button>
@@ -352,7 +351,7 @@ const MissionPlayer = ({ chapterID, startQuestionNo, onComplete, onExit, onProgr
                 style={{
                     position: 'absolute',
                     top: '20px',
-                    right: '20px',
+                    left: '280px',
                     background: 'rgba(0,0,0,0.5)',
                     border: '1px solid rgba(255,255,255,0.3)',
                     borderRadius: '50%',
@@ -371,25 +370,8 @@ const MissionPlayer = ({ chapterID, startQuestionNo, onComplete, onExit, onProgr
                 <X size={24} />
             </button>
 
-            {/* Lives Display */}
-            <div style={{
-                position: 'absolute',
-                top: '20px',
-                left: '20px',
-                background: 'rgba(0,0,0,0.7)',
-                padding: '10px 20px',
-                borderRadius: '10px',
-                border: '1px solid rgba(255,255,255,0.2)',
-                zIndex: 1000
-            }}>
-                <span style={{ 
-                    fontSize: '1.2rem', 
-                    color: lives <= 2 ? '#f44336' : '#fff',
-                    fontWeight: 'bold'
-                }}>
-                    ❤️ {lives}
-                </span>
-            </div>
+
+            
 
             <div className={styles.progress}>
                 <div
