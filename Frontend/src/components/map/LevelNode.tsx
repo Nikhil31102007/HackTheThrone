@@ -24,9 +24,9 @@ const LevelNode = ({
       case 'locked':
         return <Lock size={22} />
       case 'completed':
-        return <Check size={30} strokeWidth={3} />
+        return <Check size={30} />
       case 'available':
-        return <Star size={30} fill="var(--bg-dark)" />
+        return <Star size={30} fill="var(--bg-dark)" style={{ filter: 'drop-shadow(0px 0px 50px rgb(245, 200, 21))' }} />
     }
   }
 
