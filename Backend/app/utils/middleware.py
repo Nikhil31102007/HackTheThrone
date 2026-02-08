@@ -4,6 +4,7 @@ import logging
 from fastapi import Request, Response
 from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.responses import StreamingResponse
+from datetime import datetime
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -67,6 +68,7 @@ class LoggingMiddleware(BaseHTTPMiddleware):
 
         # Construct Log Message
         log_data = {
+            "time": datetime.now().strftime("%d-%m-%Y %H:%M:%S"),
             "method": method,
             "path": path,
             "status_code": status_code,

@@ -59,7 +59,12 @@ async def validate_answer(request: QuestionValidateRequest, db: Session = Depend
             db.add(new_progress)
             current_user.xp += question.get("xp_reward", 0)
             db.commit()
-        return {"status": "success", "message": "Theory slide completed", "xp_awarded": question.get("xp_reward", 0)}
+        return {
+                "status": "success", 
+                "message": "Theory slide completed", 
+                "xp_awarded": question.get("xp_reward", 0),
+                "new_xp": current_user.xp
+        }
 
     # Quiz validation
     if request.answer == question.get("correct_answer"):
@@ -72,7 +77,13 @@ async def validate_answer(request: QuestionValidateRequest, db: Session = Depend
             db.add(new_progress)
             current_user.xp += question.get("xp_reward", 0)
             db.commit()
-        return {"status": "success", "message": "Correct answer!", "xp_awarded": question.get("xp_reward", 0)}
+        return {
+                "status": "success", 
+                "message": "Correct Answer", 
+                "xp_awarded": question.get("xp_reward", 0),
+                "new_xp": current_user.xp
+        }
+    
     else:
         current_user.lives -= 1
         db.commit()
